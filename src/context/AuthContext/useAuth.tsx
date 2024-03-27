@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
-import { AsyncStorage, authStorageKey, firstOpenStorageKey } from '@/utils/AsyncStorage';
-import { AuthStorage, FirstStorage, User, UserStorage } from './authContext.model';
 import { Router } from 'expo-router/build/types';
+import {
+  AsyncStorage,
+  authStorageKey,
+  firstOpenStorageKey,
+  userStorageKey
+} from '@/utils/AsyncStorage';
+import {
+  AuthStorage,
+  FirstStorage,
+  User,
+  UserStorage
+} from './authContext.model';
+import userService from '@/service/userService';
 
 export function useAuth() {
   const [firstOpen, setFirstOpen] = useState(true);
@@ -51,87 +62,46 @@ export function useAuth() {
     setLoading(true);
 
     try {
-      const verify = await User.verify(cpf, password);
+      const user = await userService.login(cpf, password);
 
-      if (verify.verify) {
-        setUser(verify.data);
-        setLogged(true);
-        await AsyncStorage.save(authStorageKey, { logged: true });
+      setUser(user);
+      setLogged(true);
+      await AsyncStorage.save(authStorageKey, { logged: true });
 
-      } else {
-        setUser(null);
-        setLogged(false);
-        setError('Senha incorreta ou usuário não existe!');
-      }
-
-    } catch {
+    } catch (err: any) {
       setUser(null);
       setLogged(false);
-      setError('Erro ao tentar logar!');
+      setError(err?.message);
 
     } finally {
       setLoading(false);
     }
   };
 
-  async function handleSignin(name: string, cpf: string, password: string) {
+  async function handleSignin(cpf: string, email: string, name: string, password: string) {
     setLoading(true);
 
     try {
-      const newUser = new User(name, cpf, password);
+      const newUser = new User(cpf, email,name, password);
 
-      const existUser = await AsyncStorage.read(cpf);
-      if (existUser) {
-        setUser(null);
-        setLogged(false);
-        setError('CPF deve ser único!');
+      const user = await userService.signin(newUser);
 
-      } else {
-        const authStorage: AuthStorage = { logged: true };
-        const firstOpenStorage: FirstStorage = { first: true };
-        const userStorage: UserStorage = { user: newUser };
-        await AsyncStorage.saveMulti([
-          [cpf, userStorage],
-          [authStorageKey, authStorage],
-          [firstOpenStorageKey, firstOpenStorage],
-        ]);
-      }
+      setUser(user)
+      setLogged(true);
 
-    } catch {
+      const authStorage: AuthStorage = { logged: true };
+      const firstOpenStorage: FirstStorage = { first: true };
+      const userStorage: UserStorage = { user: newUser };
+      await AsyncStorage.saveMulti([
+        [userStorageKey, userStorage],
+        [authStorageKey, authStorage],
+        [firstOpenStorageKey, firstOpenStorage],
+      ]);
+
+    } catch (err: any) {
       setUser(null);
       setLogged(false);
-      setError('Erro ao criar conta!');
-
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  async function handleReset(
-    cpf: string,
-    oldPassword: string,
-    newPassword: string
-  ) {
-    setLoading(true);
-
-    try {
-      const verify = await User.reset(cpf, oldPassword, newPassword);
-
-      if (verify.verify) {
-        setUser(verify.data);
-        setLogged(true);
-        await AsyncStorage.save(authStorageKey, { logged: true });
-
-      } else {
-        setUser(null);
-        setLogged(false);
-        setError('Senha incorreta ou usuário não existe!');
-      }
-
-    } catch {
-      setUser(null);
-      setLogged(false);
-      setError('Erro ao tentar logar!');
+      setError(err?.message);
 
     } finally {
       setLoading(false);
@@ -141,7 +111,7 @@ export function useAuth() {
   async function handleLogout(router: Router) {
     setUser(null);
     setLogged(false);
-    await AsyncStorage.delete(authStorageKey);
+    await AsyncStorage.deleteMulti([authStorageKey, userStorageKey]);
     router.replace('/(public)');
   };
 
@@ -153,7 +123,6 @@ export function useAuth() {
     loading,
     handleLogin,
     handleSignin,
-    handleReset,
     handleLogout
   };
 };

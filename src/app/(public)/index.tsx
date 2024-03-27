@@ -1,11 +1,17 @@
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { styles } from "./styles";
 import { useContext } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
+import Button from "@/components/Button/view";
 
 export default function Public() {
+  const router = useRouter();
   const { stringTheme, theme, onToggleTheme } = useContext(ThemeContext);
+
+  function goTo(path: string) {
+    router.replace(path);
+  };
 
   return (
     <SafeAreaView style={{
@@ -30,7 +36,7 @@ export default function Public() {
           ...styles.mainText,
           color: theme.surface.onSurface
         }}>
-          CADASTRE AQUI!
+          CADASTRAAQUI!
         </Text>
         <Text style={{
           ...styles.descriptionText,
@@ -38,18 +44,15 @@ export default function Public() {
         }}>
           Para propósitos de teste a 'Api' será desenvolvida dentro do App com SQLite, fora de uma realidade em produção...
         </Text>
-        <Link href="/login" style={{
-          ...styles.btnNext,
-          backgroundColor: theme.secondary.secondary
-        }}>
-          <Text style={{
-            ...styles.btnNextText,
-            color: theme.secondary.onSecondary
-          }}>
-            Continuar
-          </Text>
-        </Link>
+        <View style={styles.btnNext}>
+          <Button
+            label="Continuar"
+            onPress={() => goTo('/login')}
+            accessibilityLabel="Botão navegar autenticar"
+            accessibilityHint="Botão para navegar para a tela de Autenticação"
+          />
+        </View>
       </View>
     </SafeAreaView>
-  )
+  );
 };

@@ -1,8 +1,10 @@
 import useAsyncStorage from "@react-native-async-storage/async-storage";
 
+export const initDBStorageKey = 'CLASSETECH_INIT_DB_STORAGE_KEY';
 export const themeStorageKey = 'CLASSETECH_THEME_STORAGE_KEY';
 export const authStorageKey = 'CLASSETECH_AUTH_STORAGE_KEY';
 export const firstOpenStorageKey = 'CLASSETECH_FIRST_OPEN_STORAGE_KEY';
+export const userStorageKey = 'CLASSETECH_USER_STORAGE_KEY';
 
 export class AsyncStorage {
   static async read(

@@ -1,11 +1,13 @@
 import { useContext, useEffect } from 'react';
-import { ThemeContextProvider } from '@/context/ThemeContext';
 import { Slot, useRouter } from 'expo-router';
+import { ThemeContextProvider } from '@/context/ThemeContext';
 import { AuthContext, AuthContextProvider } from '@/context/AuthContext';
+import { AsyncStorage, initDBStorageKey } from '@/utils/AsyncStorage';
+import { Database, InitDB } from '@/api/database/db';
 
 function Layout() {
   const router = useRouter();
-  const {isLogged, firstOpen} = useContext(AuthContext);
+  const { isLogged, firstOpen } = useContext(AuthContext);
 
   useEffect(() => {
     if (isLogged) {
@@ -15,11 +17,25 @@ function Layout() {
     } else {
       return router.replace('/login');
     }
+  }, [isLogged]);
+
+  useEffect(() => {
+    async function initSQLiteDB() {
+      const result = await AsyncStorage.read(initDBStorageKey) as InitDB;
+
+      if (!result || (result && !result.initDB)) {
+        const database = new Database();
+        await database.init();
+        AsyncStorage.save(initDBStorageKey, {initDB: true});
+      }
+    }
+    
+    if (firstOpen) {
+      initSQLiteDB();
+    }
   }, []);
 
-  return (
-    <Slot />
-  );
+  return <Slot />;
 };
 
 export default function RootLayout() {

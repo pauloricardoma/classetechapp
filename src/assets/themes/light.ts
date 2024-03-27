@@ -4,20 +4,17 @@ import { common } from "./common";
 export default {
   ...common,
   secondary: {
-    secondary: '#383838',
-    onSecondary: '#FFFFFF',
-    secondaryContainer: '#FFFFFF',
-    secondaryVariant: '#121212',
+    secondary: '#EAEDF0',
+    onSecondary: '#324150',
+    onSecondaryVariant: '#8697A8',
   },
   surface: {
     surface: '#FFFFFF',
-    onSurface: '#121212',
-    surfaceContainer: '#E3E3E3',
-    surfaceOutline: '#383838',
-  },
-  tertiary: {
-    tertiary: ['#FFFFFF', '#00E1D42F', '#00E1D4'],
-    onTertiary: '#121212',
+    surfaceContainer: '#F7F7F7',
+    surfaceOutline: '#EAEDF0',
+    onSurface: '#324150',
+    onSurfaceVariant: '#8697A8',
+    onSurfacePlaceholder: '#BEC2C6',
   },
   opacity: '#1212125F',
 } as IColorsTheme;

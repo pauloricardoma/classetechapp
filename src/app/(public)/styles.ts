@@ -32,12 +32,7 @@ export const styles = StyleSheet.create({
     marginTop: 16
   },
   btnNext: {
-    padding: 16,
-    borderRadius: 8,
+    width: 140,
     marginTop: 32
-  },
-  btnNextText: {
-    fontSize: 24,
-    fontWeight: '400'
   }
 });

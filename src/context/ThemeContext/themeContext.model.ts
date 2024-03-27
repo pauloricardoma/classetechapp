@@ -3,7 +3,7 @@ import { IColorsTheme } from "@/assets/themes/model";
 export type ThemeType = 'light' | 'dark';
 
 export interface ThemeContextModel {
-  stringTheme: string;
+  stringTheme: ThemeType;
   theme: IColorsTheme;
   onToggleTheme: () => void;
 };

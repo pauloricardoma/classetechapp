@@ -10,16 +10,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 32
   },
-  inputContainer: {
-    width: '100%',
-    marginBottom: 32
-  },
   btnContainerContained: {
-    width: 140,
+    width: 100,
     marginBottom: 32
   },
-  btnContainerText: {
-    width: '100%',
-    marginBottom: 32
-  }
 });

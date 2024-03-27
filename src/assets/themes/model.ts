@@ -33,18 +33,15 @@ export interface IColorsTheme extends IDefaultTheme {
   secondary: {
     secondary: string;
     onSecondary: string;
-    secondaryContainer: string;
-    secondaryVariant: string;
+    onSecondaryVariant: string;
   };
   surface: {
     surface: string;
     onSurface: string;
+    onSurfaceVariant: string;
+    onSurfacePlaceholder: string;
     surfaceContainer: string;
     surfaceOutline: string;
-  };
-  tertiary: {
-    tertiary: string[];
-    onTertiary: string;
   };
   opacity: string;
 };

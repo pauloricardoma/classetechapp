@@ -19,7 +19,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     loading,
     handleLogin,
     handleSignin,
-    handleReset,
     handleLogout
   } = useAuth();
 
@@ -31,7 +30,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     isLoading: loading,
     onLogin: handleLogin,
     onSignin: handleSignin,
-    onReset: handleReset,
     onLogout: handleLogout,
   }), [
     logged,
@@ -40,7 +38,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     loading,
     handleLogin,
     handleSignin,
-    handleReset,
     handleLogout
   ]);
 
