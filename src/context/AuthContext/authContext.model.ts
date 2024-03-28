@@ -9,6 +9,8 @@ export interface AuthContextModel {
   onLogin: (cpf: string, password: string) => void;
   onSignin: (cpf: string, email: string, name: string, password: string) => void;
   onLogout: (router: Router) => void;
+  onUploadImage: (userId: number, uri: string, fileName: string) => void;
+  onClearError: () => void;
 };
 
 export interface UserStorage {
@@ -28,11 +30,25 @@ export class User {
     public cpf: string,
     public email: string,
     public name: string,
-    public password: string
+    public password: string,
+    public id?: number,
+    public images?: File[],
   ) {
+    this.id = id;
     this.cpf = cpf;
     this.email = email;
     this.name = name;
     this.password = password;
+    this.images = images;
+  }
+};
+
+export class File {
+  constructor(
+    public uri: string,
+    public file_name: string,
+  ) {
+    this.uri = uri;
+    this.file_name = file_name;
   }
 };

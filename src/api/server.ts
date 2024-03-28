@@ -1,5 +1,5 @@
 import { routes } from "./routes";
-import { areUrlsIdentical, parseURL } from "./utils/parseURL"
+import { areUrlsIdentical, extractIdFromUrl, parseURL } from "./utils/parseURL"
 
 export type MethodType = 'get' | 'post' | 'update' | 'delete'
 
@@ -23,7 +23,10 @@ class Server {
         return areUrlsIdentical(path, matchURL)
       })
   
-      if (route) return await route.func({ params, body })
+      if (route) {
+        const id = extractIdFromUrl(path, route.path)
+        return await route.func({ id, params, body })
+      }
     }
   }
 }

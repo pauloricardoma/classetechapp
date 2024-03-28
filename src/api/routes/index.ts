@@ -4,6 +4,7 @@ import { MethodType } from "../server"
 export const MethodTypes: MethodType[] = ['get', 'post', 'update', 'delete']
 
 export interface RequestRoute {
+  id?: number;
   params?: Record<string, string>;
   body?: object;
 }
@@ -36,3 +37,4 @@ export const routes = new Route()
 const userController = new UserController()
 routes.addRoute('post', { path: '/user/signin', func: userController.store })
 routes.addRoute('post', { path: '/user/login', func: userController.index })
+routes.addRoute('post', { path: '/user/upload/{id}', func: userController.upload })

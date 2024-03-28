@@ -8,6 +8,7 @@ import {
 } from '@/utils/AsyncStorage';
 import {
   AuthStorage,
+  File,
   FirstStorage,
   User,
   UserStorage
@@ -19,6 +20,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [logged, setLogged] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
@@ -82,7 +84,7 @@ export function useAuth() {
     setLoading(true);
 
     try {
-      const newUser = new User(cpf, email,name, password);
+      const newUser = new User(cpf, email, name, password);
 
       const user = await userService.signin(newUser);
 
@@ -108,12 +110,48 @@ export function useAuth() {
     }
   };
 
+  async function uploadImage(userId: number, uri: string, fileName: string) {
+    setLoadingImage(true);
+
+    try {
+      const newFile = new File(uri, fileName);
+
+      const file: File = await userService.upload(userId, newFile);
+
+      if (user) {
+        const newUser = { ...user };
+        newUser.images = newUser.images?.length ? [...newUser.images, file] : [file];
+
+        setUser(newUser);
+
+        const authStorage: AuthStorage = { logged: true };
+        const firstOpenStorage: FirstStorage = { first: true };
+        const userStorage: UserStorage = { user: newUser };
+        await AsyncStorage.saveMulti([
+          [userStorageKey, userStorage],
+          [authStorageKey, authStorage],
+          [firstOpenStorageKey, firstOpenStorage],
+        ]);
+      }
+
+    } catch (err: any) {
+      setError(err?.message);
+
+    } finally {
+      setLoadingImage(false);
+    }
+  };
+
   async function handleLogout(router: Router) {
     setUser(null);
     setLogged(false);
     await AsyncStorage.deleteMulti([authStorageKey, userStorageKey]);
     router.replace('/(public)');
   };
+
+  function clearError() {
+    setError('');
+  }
 
   return {
     firstOpen,
@@ -123,6 +161,8 @@ export function useAuth() {
     loading,
     handleLogin,
     handleSignin,
-    handleLogout
+    handleLogout,
+    uploadImage,
+    clearError,
   };
 };

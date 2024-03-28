@@ -3,7 +3,7 @@ interface ParsedUrl {
   params?: Record<string, string>;
 }
 
-export function parseURL(url: string): ParsedUrl {
+export function parseURL(url: string) {
   const parsed: ParsedUrl = { path: '' };
 
   const queryParamsIndex = url.indexOf('?');
@@ -25,7 +25,7 @@ export function parseURL(url: string): ParsedUrl {
 
 const DEFAULT_ID_QUERY = '{id}';
 
-export function areUrlsIdentical(url1: string, url2: string): boolean {
+export function areUrlsIdentical(url1: string, url2: string) {
   const idPlaceholder = DEFAULT_ID_QUERY;
   const url1WithoutIds = url1.replace(/\d+/g, idPlaceholder);
   const url2WithoutIds = url2.replace(/\d+/g, idPlaceholder);
@@ -33,7 +33,7 @@ export function areUrlsIdentical(url1: string, url2: string): boolean {
   return url1WithoutIds === url2WithoutIds;
 }
 
-export function extractIdFromUrl(url: string, idPattern: string): Number | undefined {
+export function extractIdFromUrl(url: string, idPattern: string) {
   const idMatch = url.match(new RegExp(idPattern.replace(DEFAULT_ID_QUERY, '(\\d+)')));
   return idMatch ? parseInt(idMatch[1]) : undefined;
 }

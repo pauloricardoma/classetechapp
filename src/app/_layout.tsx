@@ -7,11 +7,11 @@ import { Database, InitDB } from '@/api/database/db';
 
 function Layout() {
   const router = useRouter();
-  const { isLogged, firstOpen } = useContext(AuthContext);
+  const { isLogged, firstOpen, onLogin } = useContext(AuthContext);
 
   useEffect(() => {
     if (isLogged) {
-      return router.replace('/home');
+      return router.replace('/perfil');
     } else if (!isLogged && firstOpen) {
       return router.replace('/(public)');
     } else {
@@ -33,6 +33,8 @@ function Layout() {
     if (firstOpen) {
       initSQLiteDB();
     }
+
+    onLogin('11111111111', 'teste111')
   }, []);
 
   return <Slot />;

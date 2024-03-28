@@ -1,3 +1,4 @@
+import { UserDTO } from "@/api/dto/user";
 import { Error } from "@/api/models/error";
 import { UserRepository } from "@/api/repositories/UserRepository";
 

@@ -1,5 +1,5 @@
 import HttpClient from "@/utils/Http";
-import { User } from "@/context/AuthContext/authContext.model";
+import { File, User } from "@/context/AuthContext/authContext.model";
 
 class UsersService {
   httpClient: HttpClient
@@ -13,6 +13,10 @@ class UsersService {
 
   async login(cpf: string, password: string) {
     return await this.httpClient.post('/user/login', { cpf, password });
+  }
+
+  async upload(userId: number, body: File) {
+    return await this.httpClient.post(`/user/upload/${userId}`, body);
   }
 }
 

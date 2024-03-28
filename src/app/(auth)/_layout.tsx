@@ -2,7 +2,8 @@ import { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Tabs } from 'expo-router';
 import { ThemeContext } from '@/context/ThemeContext';
-import Entypoicons from '@expo/vector-icons/Entypo';
+import Materialicons from '@expo/vector-icons/MaterialIcons';
+import Awesomeicons from '@expo/vector-icons/FontAwesome';
 
 export default function Layout() {
   const { stringTheme, theme } = useContext(ThemeContext);
@@ -23,17 +24,17 @@ export default function Layout() {
           title: 'Perfil',
           tabBarIcon: ({ color, size }) => {
 
-            return <Entypoicons name="home" color={color} size={size} />
+            return <Materialicons name="person" color={color} size={size} />
           }
         }}
         />
         <Tabs.Screen 
-        name="files/index" 
+        name="files" 
         options={{
           title: 'Arquivos',
           tabBarIcon: ({ color, size }) => {
 
-            return <Entypoicons name="home" color={color} size={size} />
+            return <Awesomeicons name="files-o" color={color} size={size} />
           }
         }}
         />

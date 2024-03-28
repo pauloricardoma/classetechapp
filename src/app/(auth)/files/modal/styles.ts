@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 16
   },
   main: {
     flex: 1,
@@ -10,13 +11,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 32
   },
-  list: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  },
-  btnContainerContained: {
+  btnOpen: {
     width: 220,
+    marginBottom: 32
+  },
+  btnBack: {
+    width: 100,
     marginBottom: 32
   },
 });

@@ -1,15 +1,17 @@
-import { User } from "../models/user";
+import { FileDTO } from "./file"
 
 export class UserDTO {
-  cpf: string
-  email: string
-  name: string
-
   constructor (
-    public user: User,
+    public id: number,
+    public cpf: string,
+    public email: string,
+    public name: string,
+    public images?: FileDTO[] | null,
   ) {
-    this.cpf = user.cpf;
-    this.email = user.password;
-    this.name = user.name;
+    this.id = id
+    this.cpf = cpf
+    this.email = email
+    this.name = name
+    this.images = images || []
   }
 }

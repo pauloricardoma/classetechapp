@@ -19,7 +19,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     loading,
     handleLogin,
     handleSignin,
-    handleLogout
+    handleLogout,
+    uploadImage,
+    clearError,
   } = useAuth();
 
   const authContextValue: AuthContextModel = useMemo(() => ({
@@ -31,6 +33,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     onLogin: handleLogin,
     onSignin: handleSignin,
     onLogout: handleLogout,
+    onUploadImage: uploadImage,
+    onClearError: clearError,
   }), [
     logged,
     user,
@@ -38,7 +42,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     loading,
     handleLogin,
     handleSignin,
-    handleLogout
+    handleLogout,
+    uploadImage,
+    clearError,
   ]);
 
   return (
