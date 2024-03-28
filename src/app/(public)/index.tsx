@@ -42,7 +42,19 @@ export default function Public() {
           ...styles.descriptionText,
           color: theme.surface.onSurface
         }}>
-          Para propósitos de teste a 'Api' será desenvolvida dentro do App com SQLite, fora de uma realidade em produção...
+          Para propósitos de teste a 'Api' será desenvolvida dentro do App com SQLite, fora de uma realidade em produção... :D
+        </Text>
+        <Text style={{
+          ...styles.descriptionText,
+          color: theme.surface.onSurface
+        }}>
+          {"Poderia ter ficado bem melhor em todas as partes, mas essa semana foi meio corrida... :'("}
+        </Text>
+        <Text style={{
+          ...styles.descriptionText,
+          color: theme.surface.onSurface
+        }}>
+          Seria bom ver todo o código que é até mais interessante que o app funcionando em si... :P
         </Text>
         <View style={styles.btnNext}>
           <Button
